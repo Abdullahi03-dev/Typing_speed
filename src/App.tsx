@@ -3,12 +3,14 @@ import Home from "./pages/home";
 import Setting from './pages/setting';
 import Typing from './pages/typing';
 import Result from './components/resultcomp';
+import { Toaster } from 'react-hot-toast';
 
 
 const App =()=>{
   return(
     <>
     <Router>
+      <Toaster position="top-left"/>
       <Routes>
         <Route element={<Home/>} path="/"/>
         <Route element={<Setting/>} path='settings'/>
