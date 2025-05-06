@@ -4,6 +4,7 @@ import image1 from '../assets/img/545682.png'
 import {useState} from 'react'
 import toast from 'react-hot-toast/headless'
 import { useNavigate } from 'react-router-dom'
+import { Toast } from 'react-hot-toast'
 
 
 const settingcomp = () => {
@@ -23,7 +24,7 @@ const settingcomp = () => {
                         navigate('/typingtest')
 
                 }else{
-                        alert('put time bro')
+                        // alert('put time bro')
                         toast.error('CHOOSE TIME')
         }
         }

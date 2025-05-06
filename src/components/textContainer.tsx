@@ -35,7 +35,7 @@ useEffect(()=>{
   if(item!==null){
     let time=parseFloat(item.slice(-2))
     if(!isNaN(time)){
-      setTimeleft(10)
+      setTimeleft(time)
     }else{
       setTimeleft(60)
     }

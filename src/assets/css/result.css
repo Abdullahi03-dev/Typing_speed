@@ -26,3 +26,8 @@
     margin: 0;
     display: inline-block;
 }
+@media(max-width:770px){
+    .result_div{
+        width: 280px;
+    }
+}
