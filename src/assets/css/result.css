@@ -1,0 +1,28 @@
+
+
+.result_div{
+    box-shadow: 0 4px 20px rgba(0, 255, 128, 0.1);
+    width: 350px;
+    height: 250px;
+    padding: 1.1em;
+}
+.result_div h2,h4{
+    text-align: center;
+    color:#00ff99;
+}
+.result_div span{
+    display: block;
+    margin: 10px 12px;
+    color: white;
+    font-weight: 700;
+}
+.result_div button{
+    margin: 0 auto;
+    display: block;
+}
+.wpm{
+    color: #00ff99;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}

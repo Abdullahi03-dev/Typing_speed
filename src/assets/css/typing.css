@@ -1,0 +1,50 @@
+.greencolor{
+    color:green;
+}
+.graycolor{
+    color: gray;
+}
+.redcolor{
+    color: red;
+}
+.head{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.container h1{
+    color:#00ff99;
+    text-align: center;
+}
+.head h3{
+    font-size: 1.5rem;
+    color: #00ff99;
+}
+.textarea{
+    padding: 1em;
+    line-height: 40px;
+    font-size: 19px;
+    height: 60vh;
+    width: 600px;
+    /* border: 1px solid white; */
+    box-shadow: 0 4px 20px rgba(0, 255, 128, 0.1);
+
+}
+/* input{
+    
+} */
+@media (max-width:770px){
+    .container h1{
+        font-size: 22px;
+    }
+    .textarea{
+        width: 300px;
+        overflow-y: scroll;
+    }
+    .head{
+        justify-content: space-around;
+    }
+    .head h3{
+        color: #00ff99;
+    }
+}
