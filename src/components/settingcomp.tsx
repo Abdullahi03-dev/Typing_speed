@@ -2,9 +2,9 @@ import '../assets/css/settingcomp.css'
 import ImageComponent from './image'
 import image1 from '../assets/img/545682.png'
 import {useState} from 'react'
-import toast from 'react-hot-toast/headless'
+// import toast from 'react-hot-toast/headless'
 import { useNavigate } from 'react-router-dom'
-import { Toast } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 
 const settingcomp = () => {
