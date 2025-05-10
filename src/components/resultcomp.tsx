@@ -1,8 +1,6 @@
-
 // import React from 'react'
 import { useState,useEffect } from "react"
-import { useNavigate } from 'react-router-dom';
-
+import { replace, useNavigate } from 'react-router-dom';
 import '../assets/css/result.css'
 const result = () => {
     const [wpm,setwpm]=useState<number>(0)
@@ -24,7 +22,7 @@ const result = () => {
              wpmscore=Math.round((typednum/5)/(60/60))
              accuracyscore=Math.round((correctnum/typednum)*100)
              
-
+          localStorage.removeItem('settingkey')
         }
         if(!isNaN(accuracyscore)&&!isNaN(wpmscore)){
           setaccuracy(accuracyscore)
@@ -35,6 +33,17 @@ const result = () => {
         }
 
     },[])
+
+    useEffect(()=>{
+      const handlepop=()=>{
+        navigate('/settings',{replace:true})
+
+      }
+      window.addEventListener('popstate',handlepop)
+      return()=>{
+        window.removeEventListener('popstate',handlepop)
+      }
+    },[navigate])
 
 
   return (

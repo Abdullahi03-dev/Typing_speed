@@ -21,6 +21,8 @@
     color: #00ff99;
 }
 .textarea{
+    overflow-y: auto;
+    /* animation: typing 3s steps(40,end); */
     padding: 1em;
     line-height: 40px;
     font-size: 19px;
@@ -29,6 +31,11 @@
     /* border: 1px solid white; */
     box-shadow: 0 4px 20px rgba(0, 255, 128, 0.1);
 
+}
+width_checker{
+    visibility: hidden;
+    white-space: pre-wrap;
+    
 }
 /* input{
     

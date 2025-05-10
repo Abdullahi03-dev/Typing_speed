@@ -14,6 +14,9 @@ const textContainer=()=> {
 
   const [timeleft,setTimeleft]=useState<number>(0)
   const inputref=useRef<HTMLInputElement>(null)
+
+
+
   const navigate=useNavigate()
 
 
@@ -60,6 +63,7 @@ useEffect(()=>{
   const item =localStorage.getItem('settingkey')
     let filename=''
     if(item === null){
+      navigate(-1)
     }else{
       const trimmed=item.trim().slice(0,-2)
        filename=`data/${trimmed}.json`;
@@ -93,6 +97,8 @@ useEffect(()=>{
   },[])
 
 
+
+
 const handleinput=(e:React.ChangeEvent<HTMLInputElement>)=>{
   setUserInput(e.target.value)
   setNumberOfText((prev)=>prev+1)
@@ -123,14 +129,13 @@ const handleinput=(e:React.ChangeEvent<HTMLInputElement>)=>{
       count++
     }
     setCorrectType(count)
-
+   
   },[randomtext,userInput])
-if(timeleft==0){
-  navigate('../result')
-}
-
-
-
+useEffect(()=>{
+  if(timeleft==0&&userInput.length>0){
+    navigate('../result')
+  }
+},[timeleft])
 
 
 
@@ -146,9 +151,10 @@ if(timeleft==0){
       <h3>TIME:{timeleft}</h3>
       </div>
             
-            <div className='textarea'>
-                {renderingText()}
-            </div>
+              <div className='textarea'>
+              {renderingText()}
+
+              </div>
 
 
             <input ref={inputref} 
