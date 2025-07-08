@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useState,useEffect } from "react"
-import { replace, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import '../assets/css/result.css'
 const result = () => {
     const [wpm,setwpm]=useState<number>(0)

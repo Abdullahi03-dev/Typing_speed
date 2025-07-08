@@ -1,173 +1,147 @@
 import { useNavigate } from 'react-router-dom';
-import '../assets/css/typing.css'
-interface BookItem{
-  id:number;
-  text:string;
-}
-import {useEffect, useRef, useState} from 'react'
-const textContainer=()=> {
-  
-  const [userInput,setUserInput]=useState<string>("")
-  const [randomtext,setRandomText]=useState<string>("")
-  const [numberoftyped,setNumberOfText]=useState<number>(0)
-  const [correctTyped,setCorrectType]=useState<number>(0)
+import '../assets/css/typing.css';
+import { useEffect, useRef, useState } from 'react';
 
-  const [timeleft,setTimeleft]=useState<number>(0)
-  const inputref=useRef<HTMLInputElement>(null)
-
-
-
-  const navigate=useNavigate()
-
-
-  useEffect(()=>{
-    const handleBeforeUnload=(event:any)=>{
-      event.preventDefault()
-      event.returnValue=''
-    }
-
-    window.addEventListener('beforeunload',handleBeforeUnload)
-
-    return ()=>{
-      window.removeEventListener('beforeunload',handleBeforeUnload)
-    }
-  },[])
-
-useEffect(()=>{
-  const item =localStorage.getItem('settingkey')
-  if(item!==null){
-    let time=parseFloat(item.slice(-2))
-    if(!isNaN(time)){
-      setTimeleft(time)
-    }else{
-      setTimeleft(60)
-    }
-  }else{
-    setTimeleft(60)
-  }
-},[])
-  
- useEffect(()=>{
-  if(timeleft==0){
-    localStorage.setItem('numberTyped',numberoftyped.toString())
-    localStorage.setItem('correctTyped',correctTyped.toString())
-    return
-  }
-  const timer =setInterval(()=>{
-    setTimeleft((prev)=>prev-1)
-  },1000)
-
-  return ()=>clearInterval(timer)
- },[timeleft])
-  useEffect(()=>{
-  const item =localStorage.getItem('settingkey')
-    let filename=''
-    if(item === null){
-      navigate(-1)
-    }else{
-      const trimmed=item.trim().slice(0,-2)
-       filename=`data/${trimmed}.json`;
-    }
-      
-    fetch(`${filename}`)
-    .then((response)=>response.json() as Promise<BookItem[]>)
-    
-    .then((data)=>{
-      const randomIndex=Math.floor(Math.random()*data.length)
-      const text=data[randomIndex].text
-      setRandomText(text)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
-
-  },[])
- 
-
-  useEffect(()=>{
-    // inputref.current.focus()
-    const handleclick=()=>{
-      if(inputref.current){
-      inputref.current.focus()
-      }
-    }
-    document.addEventListener('click',handleclick);
-    return ()=>
-    document.removeEventListener('click',handleclick)
-  },[])
-
-
-
-
-const handleinput=(e:React.ChangeEvent<HTMLInputElement>)=>{
-  setUserInput(e.target.value)
-  setNumberOfText((prev)=>prev+1)
+interface BookItem {
+  id: number;
+  text: string;
 }
 
-  //function for rendering text
-  
-  const renderingText=()=>{
-    return randomtext.split("").map((char,index)=>{
-      const typedtext=userInput[index];
+const TextContainer = () => {
+  const [userInput, setUserInput] = useState('');
+  const [lines, setLines] = useState<string[]>([]);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [numberoftyped, setNumberOfText] = useState(0);
+  const [correctTyped, setCorrectType] = useState(0);
+  const [timeleft, setTimeleft] = useState(60);
 
-      let className='graycolor';
-      if(typedtext===char){
-      className='greencolor';
-      }else if (typedtext!==undefined){
-        className='redcolor'
-      }
+  const inputRef = useRef<HTMLInputElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-      return(
-        <span key={index} className={className}>{char}</span>
-      )
-    })
-  }
-  let count=0
-  useEffect(()=>{
-    for (let i = 0; i < randomtext.length; i++) {
-      if(randomtext[i]===userInput[i])
-      count++
+  useEffect(() => {
+    const item = localStorage.getItem('settingkey');
+    setCorrectType(2)
+    let filename = '';
+    if (item === null) {
+      navigate(-1);
+    } else {
+      const trimmed = item.trim().slice(0, -2);
+      filename = `data/${trimmed}.json`;
     }
-    setCorrectType(count)
-   
-  },[randomtext,userInput])
-useEffect(()=>{
-  if(timeleft==0&&userInput.length>0){
-    navigate('../result')
-  }
-},[timeleft])
 
+    fetch(filename)
+      .then((response) => response.json() as Promise<BookItem[]>)
+      .then((data) => {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const text = data[randomIndex].text;
+        const words=text.trim().split(/\s+/)
+        const chunkSize=window.innerWidth<779?5:8;
+        const splitted:string[]=[];
+        for (let i = 0; i < words.length; i+=chunkSize) {
+          const chunk=words.slice(i,i+chunkSize).join(' ')
+          splitted.push(chunk)
+        }
+        // const splitted = text.match(/.{1,50}/g) || []; // Split text into 50-char lines
+        setLines(splitted);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  useEffect(() => {
+    if (timeleft === 0) {
+      localStorage.setItem('numberTyped', numberoftyped.toString());
+      localStorage.setItem('correctTyped', correctTyped.toString());
+      navigate('../result');
+      return;
+    }
+    const timer = setInterval(() => {
+      setTimeleft((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [timeleft]);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
+  useEffect(() => {
+    if (lineRef.current) {
+      lineRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [currentLineIndex]);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUserInput(value);
+    setNumberOfText((prev) => prev + 1);
 
+    const currentLine = lines[currentLineIndex] || '';
+
+    if (value.length >= currentLine.length) {
+      // Move to next line regardless of correctness
+      setCurrentLineIndex((prev) => prev + 1);
+      setUserInput('');
+    }
+  };
+
+  const renderLines = () => {
+    return lines.map((line, index) => {
+      const isActive = index === currentLineIndex;
+  
+      return (
+        <div
+          key={index}
+          className={isActive ? 'active-line' : 'line'}
+          ref={isActive ? lineRef : null}
+        >
+          {isActive
+            ? line.split('').map((char, charIndex) => {
+                const typedChar = userInput[charIndex];
+                let className = 'gray';
+  
+                if (typedChar !== undefined) {
+                  if (typedChar === char) className = 'green';
+                  else className = 'red';
+                }
+  
+                return (
+                  <span key={charIndex} className={className}>
+                    {char}
+                  </span>
+                );
+              })
+            : line}
+        </div>
+      );
+    });
+  };
 
   return (
-    <>
     <div className='container'>
       <div className='head'>
-      <h1>TYPING TEST</h1>
-      <h3>TIME:{timeleft}</h3>
+        <h1>TYPING TEST</h1>
+        <h3>TIME: {timeleft}</h3>
       </div>
-            
-              <div className='textarea'>
-              {renderingText()}
 
-              </div>
+      <div className='textarea'>{renderLines()}</div>
 
-
-            <input ref={inputref} 
-            type='text'
-            value={userInput}
-            onChange={handleinput}
-            placeholder='start typing'
-            autoFocus
-            style={{opacity:0}}
-            />
+      <input
+        ref={inputRef}
+        type='text'
+        value={userInput}
+        onChange={handleInput}
+        placeholder='start typing'
+        autoFocus
+        style={{ opacity: 0 }}
+      />
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default textContainer
+export default TextContainer;
+

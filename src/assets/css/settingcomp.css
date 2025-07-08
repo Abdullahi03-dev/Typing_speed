@@ -28,7 +28,7 @@ body{
     border-radius: 10px;
     text-align: center;
     margin: 0 2em;
-    box-shadow: 0 4px 20px rgba(0, 255, 128, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 255, 128, 0.2);
 }
 .card button{
     display: flex;
@@ -67,17 +67,17 @@ body{
     -webkit-appearance:none;
 	appearance:none;
     border-radius: 50%;
-    border: 3px solid #00ff99;
+    border: 4px solid #00ff99;
     margin:0 6px;
 	width: 1em;
 	height: 1em;
-	padding: 3px;
+	padding: 4px;
 }
 .timers input:checked{
 	transition: 120ms transform ease-in-out;
 	border-radius: 50%;
 	background-color:white;
-	border:3px solid #00ff7f;
+	border:4px solid #00ff7f;
 }
 @media (max-width:770px){
     .cards{
@@ -90,6 +90,6 @@ body{
         padding-top:30px;
         padding-bottom: 5px;
         margin: 0;
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 }
