@@ -22,16 +22,8 @@ export default defineConfig({
         display:'standalone',
         start_url:'/',
         icons:[
-          {
-            src:'/icons/file_000000006e986246b004400cb3d487df.png',
-            sizes:'192*192',
-            type:'image/png'
-          },
-          {
-            src:'/icons/file_000000006e986246b004400cb3d487df.png',
-            sizes:'512*512',
-            type:'image/png'
-          }
+          {"src":"/icons/icon-192x192.png","sizes":"192x192","type":"image/png"},
+          {"src":"/icons/icon-512x512.png","sizes":"512x512","type":"image/png"}
         ]
       }
     })
