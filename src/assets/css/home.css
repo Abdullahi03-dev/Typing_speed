@@ -53,6 +53,7 @@ nav img{
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  color:black;
 
 }
 .div_center{
