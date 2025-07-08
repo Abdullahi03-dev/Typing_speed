@@ -1,5 +1,21 @@
 
+button{
+    display: block;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
 
+}
 .result_div{
     box-shadow: 0 4px 20px rgba(0, 255, 128, 0.1);
     width: 350px;

@@ -18,7 +18,7 @@ export default defineConfig({
         short_name:'TypingAPP',
         description:'Test and 11improve your typing speed!',
         theme_color:'#2196f3',
-        background_color:'#ffffff',
+        background_color:'#1a1b1e',
         display:'standalone',
         start_url:'/',
         icons:[
