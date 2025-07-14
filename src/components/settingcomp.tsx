@@ -1,7 +1,7 @@
 import '../assets/css/settingcomp.css'
 import ImageComponent from './image'
 import image1 from '../assets/img/545682.png'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 // import toast from 'react-hot-toast/headless'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -28,6 +28,12 @@ const settingcomp = () => {
                         toast.error('CHOOSE TIME')
         }
         }
+        useEffect(()=>{
+        localStorage.removeItem('numberTyped');
+        localStorage.removeItem('correctTyped');
+        },[])
+
+
   return (
     <>
     <h1 className='header_tag'>SET SETTINGS</h1>

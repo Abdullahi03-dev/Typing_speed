@@ -16,7 +16,7 @@ export default defineConfig({
       manifest:{
         name:'Typing Speed App',
         short_name:'TypingAPP',
-        description:'Test and 11improve your typing speed!',
+        description:'Test and improve your typing speed!',
         theme_color:'#2196f3',
         background_color:'#1a1b1e',
         display:'standalone',
