@@ -23,7 +23,7 @@ button{
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-
+color:black;
 }
 .header_tag{
     font-size: 3rem;
