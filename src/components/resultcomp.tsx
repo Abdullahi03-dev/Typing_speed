@@ -19,9 +19,8 @@ const result = () => {
             let typednum=parseFloat(typedtext)
             let correctnum=parseFloat(correctTyped)
 
-             wpmscore=Math.round((typednum/5)/(60/60))
+             wpmscore=Math.round((typednum)/(60/60))
              accuracyscore=Math.round((correctnum/typednum)*100)
-             
           localStorage.removeItem('settingkey')
         }
         if(!isNaN(accuracyscore)&&!isNaN(wpmscore)){

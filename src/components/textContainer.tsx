@@ -35,14 +35,13 @@ const TextContainer = () => {
       .then((data) => {
         const randomIndex = Math.floor(Math.random() * data.length);
         const text = data[randomIndex].text;
-        const words=text.trim().split(/\s+/)
-        const chunkSize=window.innerWidth<779?5:8;
-        const splitted:string[]=[];
-        for (let i = 0; i < words.length; i+=chunkSize) {
-          const chunk=words.slice(i,i+chunkSize).join(' ')
+        const words = text.trim().split(/\s+/)
+        const chunkSize = window.innerWidth < 779 ? 5 : 8;
+        const splitted: string[] = [];
+        for (let i = 0; i < words.length; i += chunkSize) {
+          const chunk = words.slice(i, i + chunkSize).join(' ')
           splitted.push(chunk)
         }
-        // const splitted = text.match(/.{1,50}/g) || []; // Split text into 50-char lines
         setLines(splitted);
       })
       .catch((err) => {
@@ -83,7 +82,13 @@ const TextContainer = () => {
     const currentLine = lines[currentLineIndex] || '';
 
     if (value.length >= currentLine.length) {
-      // Move to next line regardless of correctness
+      if (currentLineIndex === lines.length - 1) {
+        // ✅ All lines completed → Go to result page
+        localStorage.setItem('numberTyped', numberoftyped.toString());
+        localStorage.setItem('correctTyped', correctTyped.toString());
+        navigate('../result');
+        return;
+      }
       setCurrentLineIndex((prev) => prev + 1);
       setUserInput('');
     }
@@ -92,23 +97,25 @@ const TextContainer = () => {
   const renderLines = () => {
     return lines.map((line, index) => {
       const isActive = index === currentLineIndex;
-  
+      const isPast = index < currentLineIndex; // ✅ Lines already typed
+
       return (
         <div
           key={index}
           className={isActive ? 'active-line' : 'line'}
           ref={isActive ? lineRef : null}
+          style={{ color: isPast ? 'transparent' : 'inherit' }} // ✅ Past lines transparent
         >
           {isActive
             ? line.split('').map((char, charIndex) => {
                 const typedChar = userInput[charIndex];
-                let className = 'gray';
-  
+                let className = 'black';
+
                 if (typedChar !== undefined) {
-                  if (typedChar === char) className = 'green';
-                  else className = 'red';
+                  if (typedChar === char) className = 'green'; // ✅ Correct letter green
+                  else className = 'red'; // ✅ Wrong letter red
                 }
-  
+
                 return (
                   <span key={charIndex} className={className}>
                     {char}
@@ -128,7 +135,12 @@ const TextContainer = () => {
         <h3>TIME: {timeleft}</h3>
       </div>
 
-      <div className='textarea'>{renderLines()}</div>
+      <div
+        className='textarea'
+        onClick={() => inputRef.current?.focus()} // ✅ Clicking textarea shows keyboard
+      >
+        {renderLines()}
+      </div>
 
       <input
         ref={inputRef}
@@ -144,4 +156,3 @@ const TextContainer = () => {
 };
 
 export default TextContainer;
-
